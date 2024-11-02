@@ -129,6 +129,11 @@
         "name": "Horse Saddle",
         "shortname": "horse.saddle"
     },
+    "1556365900": {
+        "link": "https://wiki.rustclash.com/img/items180/grenade.molotov.png",
+        "name": "Molotov Cocktail",
+        "shortname": "grenade.molotov"
+    },
     "1559915778": {
         "link": "https://rustlabs.com/img/items180/horse.saddle.png",
         "name": "Horse Saddle Single",
