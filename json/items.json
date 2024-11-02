@@ -2704,6 +2704,11 @@
         "name": "Hitch & Trough",
         "shortname": "hitchtroughcombo"
     },
+    "1168856825": {
+        "link": "https://wiki.rustclash.com/img/items180/metal.detector.png",
+        "name": "Metal Detector",
+        "shortname": "metal.detector"
+    },
     "1171735914": {
         "link": "https://rustlabs.com/img/items180/electric.andswitch.png",
         "name": "AND Switch",
