@@ -1,4 +1,9 @@
 {
+    "-907422733": {
+        "link": "https://wiki.rustclash.com/img/items180/largebackpack.png",
+        "name": "Large Backpack",
+        "shortname": "largebackpack"
+    },
     "-2139580305": {
         "link": "https://rustlabs.com/img/items180/autoturret.png",
         "name": "Auto Turret",
@@ -3558,6 +3563,11 @@
         "link": "https://rustlabs.com/img/items180/oretea.advanced.png",
         "name": "Advanced Ore Tea",
         "shortname": "oretea.advanced"
+    },
+    "2068884361": {
+        "link": "https://wiki.rustclash.com/img/items180/smallbackpack.png",
+        "name": "Small Backpack",
+        "shortname": "smallbackpack"
     },
     "2070189026": {
         "link": "https://rustlabs.com/img/items180/sign.pole.banner.large.png",
