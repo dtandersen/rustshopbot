@@ -1,23 +1,26 @@
+import time
 from discord import app_commands
 from discord.ext import commands
 import discord
 import json
 from typing import List
 from rustplus import RustMarker, convert_xy_to_grid, RustSocket
-
+import pprint
 
 class vending(commands.Cog):
     def __init__(self, client):
         print("[Cog] Vending Machines has been initiated")
         self.client = client
         self.sockets = {}
+        self.last_query = 0
+        self.last_markers = None
 
     with open("./json/config.json", "r") as f:
         config = json.load(f)
     with open("./json/items.json", "r") as f:
         items_list = json.load(f)
 
-    list_of_servers = [{'name': 'Gnomeslayer Rocks', 'id': 1234}, {'name': 'Gnomeslayer Still Rocks', 'id': 1234}, ]
+    list_of_servers = [{'name': 'Friendly Seattle', 'id': 1234},{'name': 'Sanctum', 'id': 2345} ]
     server_names = []
     count = 1
     for server in list_of_servers:
@@ -75,25 +78,48 @@ class vending(commands.Cog):
         servername = None
         for socket in self.sockets:
             if str(server.name).lower() == str(socket).lower():
+                time_now = time.time()
+                elapsed = time_now - self.last_query
                 servername = socket
                 sock = self.sockets[servername]['socket']
-                socketmarkers = await sock.get_markers()
-                markers = []
-                for marker in socketmarkers:
-                    markers.append(marker)
+
+                if elapsed > 5*60:
+                    print(f"Querying {servername}...")
+                    socketmarkers = await sock.get_markers()
+                    markers = []
+                    for marker in socketmarkers:
+                        markers.append(marker)
+                    self.last_markers=markers
+                    self.last_query=time_now
+                else:
+                    print("Using cache")
+                    markers = self.last_markers
+
                 item_list = []
                 for marker in markers:
                     if marker.type != RustMarker.VendingMachineMarker:
                         continue
+                    # print(f"marker={marker}")
+                    # obj_vars = vars(marker)
+                    # pprint.pp(obj_vars)
                     items_sold = None
                     for sell_order in marker.sell_orders:
+                        # obj_vars = vars(sell_order)
+                        # pprint.pp(obj_vars)
+
                         if str(sell_order.item_id) in self.items_list:
                             sell_order_item = str(
                                 self.items_list[f"{sell_order.item_id}"]['name']).lower()
                         else:
-                            sell_order_item = None
+                            sell_order_item = f"Unknown: {sell_order.item_id}"
 
-                        if sell_order_item == item:
+                        if str(sell_order.currency_id) in self.items_list:
+                            buy_item = str(
+                                self.items_list[f"{sell_order.currency_id}"]['name']).lower()
+                        else:
+                            buy_item =  f"Unknown: {sell_order.currency_id}"
+
+                        if sell_order_item == item or buy_item == item:
                             grid = convert_xy_to_grid(
                                 (marker.x, marker.y), self.sockets[servername]['map_size'], False)
                             grid = ''.join(str(item) for item in grid)
@@ -101,20 +127,25 @@ class vending(commands.Cog):
                                 currency_name = self.items_list[f"{sell_order.currency_id}"]['name']
                             else:
                                 currency_name = "Unknown."
+
+                            message = f"[Grid: {grid}]\nSelling: {sell_order_item} x{sell_order.quantity}\nBuying: {currency_name} x{sell_order.cost_per_item}\nStock: {sell_order.amount_in_stock}"
+
                             if items_sold:
-                                items_sold += f"\n[Grid: {grid}] - Selling for: {sell_order.cost_per_item} {currency_name}"
+                                items_sold += f"\n{message}"
                             else:
-                                items_sold = f"[Grid: {grid}] - Selling for: {sell_order.cost_per_item} {currency_name}"
+                                items_sold = f"{message}"
                                 
                             if len(items_sold) >= 750:
                                 item_list.append(items_sold)
                                 items_sold = None
                     if items_sold:
                         item_list.append(items_sold)
+        # return                        
         if item_list:
             for items in item_list:
                 embed = await self.setup_embed(item_list=items, thumbnail=thumbnail, item=item, servername=servername)
                 await interaction.followup.send(embed=embed)
+                time.sleep(2)
         else:
             embed = discord.Embed(title=f"Showing vending machine data for: '**{item}**'", color=int(
                 self.config['cogs']['color'], base=16))
@@ -124,6 +155,7 @@ class vending(commands.Cog):
             embed.add_field(name=f"{servername} vending machine data!",
                             value=f"```Item not being sold on this server. Start capitalizing on this right now!```", inline=False)
             await interaction.followup.send(embed=embed)
+            # time.sleep(2)
         
     async def setup_embed(self, item_list, thumbnail, item, servername):
         embed = discord.Embed(title=f"Showing vending machine data for: '**{item}**'", color=int(
@@ -132,7 +164,7 @@ class vending(commands.Cog):
             text="Discord bot created by Gnomeslayer, using Rust+ wrapper created by Ollie.")
         embed.set_thumbnail(url=thumbnail)
         embed.add_field(name=f"{servername} vending machine data!",
-                        value=f"```{item_list}```", inline=False)
+                        value=f"```{item_list}```", inline=True)
         return embed
         
 async def setup(client):
