@@ -13,3 +13,4 @@ COPY repository /app/repository
 COPY command /app/command
 COPY json/items.json /app/json
 
+ENTRYPOINT [ "python", "Discordbot.py" ]

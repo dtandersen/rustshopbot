@@ -4,3 +4,4 @@ rustplus.config.json
 __pycache__
 markers copy.json
 markers.json
+values.yaml
