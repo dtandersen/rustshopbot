@@ -1,10 +1,7 @@
 from abc import ABCMeta
 from dataclasses import dataclass
-import json
-import pprint
 from typing import List
 
-from objprint import objstr
 
 from command.item import RustOrder
 from rustplus import RustMarker, RustSocket, ServerDetails
@@ -89,7 +86,7 @@ class RustPlusRustGateway(RustGateway):
 
 class RustPlusRustGatewayFactory(RustGatewayFactory):
     async def connect(self, config: ServerConfig) -> RustGateway:
-        print(f"Connecting to {config.host}:{config.port}")
+        print(f"Connecting to {config.host}:{config.port}...")
         server_details = ServerDetails(
             config.host, config.port, config.playerId, config.playerToken
         )

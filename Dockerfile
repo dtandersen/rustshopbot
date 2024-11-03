@@ -9,6 +9,7 @@ RUN pip install -r requirements.txt
 COPY Discordbot.py /app
 COPY cogs /app/cogs
 COPY gateway /app/gateway
+COPY repository /app/repository
 COPY command /app/command
 COPY json/items.json /app/json
 

@@ -6,7 +6,8 @@ import discord
 import json
 from typing import Dict, List
 from command.item import Order
-from command.list_items import ListItems
+from command.search_buyers import SearchBuyers
+from command.search_sellers import SearchSellers
 from gateway.rust import RustPlusRustGatewayFactory, ServerConfig
 from repository.item_repository import JsonItemRepository
 from repository.server_repository import JsonServerRepository
@@ -30,6 +31,7 @@ class vending(commands.Cog):
         print("[Cog] Vending Machines has been initiated")
         self.socket_factory = RustPlusRustGatewayFactory()
         self.item_repository = JsonItemRepository()
+        self.server_repository = JsonServerRepository()
         self.cogs_color = "0x9b59b6"
 
     server_names = get_server_names()
@@ -57,32 +59,54 @@ class vending(commands.Cog):
             return [app_commands.Choice(name=d, value=d) for d in default]
 
     @app_commands.command(
-        name="vendingsearch", description="Searches The Rust Server's Vending Machine"
+        name="buy", description="Searches The Rust Server's Vending Machine"
     )
     @app_commands.guild_only()
     @app_commands.describe(item="List of items")
     @app_commands.describe(server="Select a server")
     @app_commands.choices(server=[*server_names])
     @app_commands.autocomplete(item=autocomplete)
-    async def search(
+    async def search_sellers(
         self,
         interaction: discord.Interaction,
         server: app_commands.Choice[int],
         item: str,
     ):
-        print(f"Searching for {item} on {server.name}")
+        print(f"Searching for sellers of {item} on {server.name}")
 
         await interaction.response.defer()
-        thumbnail = None
-        command = ListItems(
-            self.socket_factory, JsonServerRepository(), JsonItemRepository()
+        command = SearchSellers(
+            self.socket_factory, self.server_repository, self.item_repository
         )
         orders = await command.execute(server.name, item)
+        await self.present_orders(orders, item, server.name, interaction)
 
-        # group orders by grid
+    @app_commands.command(
+        name="sell", description="Searches The Rust Server's Vending Machine"
+    )
+    @app_commands.guild_only()
+    @app_commands.describe(item="List of items")
+    @app_commands.describe(server="Select a server")
+    @app_commands.choices(server=[*server_names])
+    @app_commands.autocomplete(item=autocomplete)
+    async def search_buyers(
+        self,
+        interaction: discord.Interaction,
+        server: app_commands.Choice[int],
+        item: str,
+    ):
+        print(f"Searching for buyers of {item} on {server.name}")
+
+        await interaction.response.defer()
+        command = SearchBuyers(
+            self.socket_factory, self.server_repository, self.item_repository
+        )
+        orders = await command.execute(server.name, item)
+        await self.present_orders(orders, item, server.name, interaction)
+
+    async def present_orders(self, orders, item, servername, interaction):
+        thumbnail = None
         orders_by_grid = group_by_key(orders)
-        # print(orders_by_grid)
-
         for orders in orders_by_grid.values():
             messages = []
             for order in orders:
@@ -91,12 +115,12 @@ class vending(commands.Cog):
                 grid = order.grid
 
                 message = f"Selling: {sell_order_item} x{order.quantity}\nBuying: {currency_name} x{order.cost_per_item}\nStock: {order.amount_in_stock}"
-                if len("\n---\n".join(messages + [message])) > 1024:
+                if len(self.format_messages(messages + [message])) > 1024:
                     embed = await self.setup_embed(
-                        item_list="\n---\n".join(messages),
+                        item_list=self.format_messages(messages),
                         thumbnail=thumbnail,
                         item=item,
-                        servername=server.name,
+                        servername=servername,
                         grid=grid,
                     )
                     messages = [message]
@@ -106,10 +130,10 @@ class vending(commands.Cog):
 
             if len(messages) > 0:
                 embed = await self.setup_embed(
-                    item_list="\n---\n".join(messages),
+                    item_list=self.format_messages(messages),
                     thumbnail=thumbnail,
                     item=item,
-                    servername=server.name,
+                    servername=servername,
                     grid=grid,
                 )
                 time.sleep(2)
@@ -131,6 +155,9 @@ class vending(commands.Cog):
             inline=True,
         )
         return embed
+
+    def format_messages(self, messages):
+        return "\n---\n".join(messages)
 
 
 async def setup(client):

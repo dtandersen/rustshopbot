@@ -8,7 +8,7 @@ from repository.item_repository import ItemRepository
 from repository.server_repository import ServerRepository
 
 
-class ListItems:
+class SearchSellers:
     def __init__(
         self,
         socket_factory: RustGatewayFactory,
@@ -34,10 +34,8 @@ class ListItems:
             item_name = self.get_item_name(rust_order.item_id)
             currency_name = self.get_item_name(rust_order.currency_id)
 
-            if (
-                item_name.lower() == query.lower()
-                or currency_name.lower() == query.lower()
-            ):
+            if item_name.lower() == query.lower():
+                # or currency_name.lower() == query.lower()
                 orders.append(
                     Order(
                         item=item_name,
