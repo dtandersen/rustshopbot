@@ -1,5 +1,7 @@
 # Pairing
 
+The bot must be paired with Rust+ on each server.
+
 https://github.com/liamcottle/rustplus.js#pairing
 
 ```
@@ -11,24 +13,21 @@ npx @liamcottle/rustplus.js fcm-listen
 
 Add `playerToken` to `config.json`.
 
+# Run bot
+
+With Python
+
 ```
 python Discordbot.py
 ```
 
-# Sell Order
+With Docker
 
 ```
-{
-    '_item_id': -1330640246,
-    '_quantity': 1,
-    '_currency_id': -932201673,
-    '_cost_per_item': 69,
-    '_item_is_blueprint': False,
-    '_currency_is_blueprint': False,
-    '_amount_in_stock': 1
-}
- ```
+docker run --rm -it -v %cd%\json\config.json:/app/json/config.json rustshopbot python Discordbot.py
+```
 
- # Credits
+ # References
 
- * Forked from https://github.com/Gnomeslayer/vending
+ * Forked from [vending](https://github.com/Gnomeslayer/vending) by Gnomeslayer
+ * [Rust+.py](https://github.com/olijeffers0n/rustplus)
