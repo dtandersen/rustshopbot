@@ -1,0 +1,11 @@
+{
+    "servers": [
+        {
+            "name": "Test Server",
+            "ip": "127.0.0.1",
+            "port": "28082",
+            "playerId": "12345",
+            "playerToken": "67890"
+        }
+    ]
+}
