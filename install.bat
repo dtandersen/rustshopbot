@@ -1,1 +1,1 @@
-helm install rustshopbot charts\rustshopbot -f values.yaml
+helm install rustshopbot charts\rustshopbot -n rustshopbot -f values.yaml

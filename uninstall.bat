@@ -1,1 +1,1 @@
-helm uninstall rustshopbot
+helm uninstall rustshopbot -n rustshopbot
