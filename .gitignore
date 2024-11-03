@@ -2,3 +2,5 @@
 /json/config.json
 rustplus.config.json
 __pycache__
+markers copy.json
+markers.json
