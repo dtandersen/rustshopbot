@@ -1,9 +1,6 @@
 from abc import ABCMeta
 from dataclasses import dataclass
 from typing import List
-
-
-from command.item import RustOrder
 from rustplus import RustMarker, RustSocket, ServerDetails
 from rustplus.structs import RustInfo
 
@@ -14,6 +11,18 @@ class ServerConfig:
     port: int
     playerId: int
     playerToken: int
+
+
+@dataclass(frozen=True)
+class RustOrder:
+    name: str
+    item_id: int
+    quantity: int
+    amount_in_stock: int
+    currency_id: int
+    cost_per_item: int
+    x: int
+    y: int
 
 
 class RustGateway(metaclass=ABCMeta):
@@ -32,7 +41,7 @@ class RustGatewayFactory(metaclass=ABCMeta):
         pass
 
 
-class RustPlusRustGateway(RustGateway):
+class RustPlusPyRustGateway(RustGateway):
     def __init__(self, socket: RustSocket) -> None:
         self.socket: RustSocket = socket
 
@@ -62,6 +71,7 @@ class RustPlusRustGateway(RustGateway):
                 # pprint.pp(obj_vars)
 
                 order = RustOrder(
+                    name=marker.name,
                     item_id=marker_sell_order.item_id,
                     quantity=marker_sell_order.quantity,
                     amount_in_stock=marker_sell_order.amount_in_stock,
@@ -84,7 +94,7 @@ class RustPlusRustGateway(RustGateway):
         await self.socket.disconnect()
 
 
-class RustPlusRustGatewayFactory(RustGatewayFactory):
+class RustPlusPyRustGatewayFactory(RustGatewayFactory):
     async def connect(self, config: ServerConfig) -> RustGateway:
         print(f"Connecting to {config.host}:{config.port}...")
         server_details = ServerDetails(
@@ -93,4 +103,4 @@ class RustPlusRustGatewayFactory(RustGatewayFactory):
         socket = RustSocket(server_details)
         await socket.connect()
 
-        return RustPlusRustGateway(socket)
+        return RustPlusPyRustGateway(socket)

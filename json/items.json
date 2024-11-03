@@ -3733,5 +3733,10 @@
         "link": "https://rustlabs.com/img/items180/clone.corn.png",
         "name": "Abyss Divers Suit",
         "shortname": "hazmatsuit.diver"
+    },
+    "-1315992997": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Dragon Rocket Launcher",
+        "shortname": "rocket.launcher.dragon"
     }
 }

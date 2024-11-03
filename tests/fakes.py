@@ -1,6 +1,11 @@
 from typing import List
-from command.item import RustOrder
-from gateway.rust import RustGateway, RustGatewayFactory, ServerConfig
+
+from rustshopbot.gateway.rust import (
+    RustGateway,
+    RustGatewayFactory,
+    RustOrder,
+    ServerConfig,
+)
 
 
 class FakeRustGateway(RustGateway):

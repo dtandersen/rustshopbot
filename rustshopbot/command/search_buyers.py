@@ -1,14 +1,12 @@
 import string
-from typing import Dict, List, Tuple
-from command.item import Order, RustOrder
-from gateway.rust import RustGatewayFactory, ServerConfig
+from typing import List, Tuple
+from rustshopbot.entity.order import Order
+from rustshopbot.gateway.rust import RustGatewayFactory
+from rustshopbot.repository.item_repository import ItemRepository
+from rustshopbot.repository.server_repository import ServerRepository
 
 
-from repository.item_repository import ItemRepository
-from repository.server_repository import ServerRepository
-
-
-class SearchSellers:
+class SearchBuyers:
     def __init__(
         self,
         socket_factory: RustGatewayFactory,
@@ -34,10 +32,10 @@ class SearchSellers:
             item_name = self.get_item_name(rust_order.item_id)
             currency_name = self.get_item_name(rust_order.currency_id)
 
-            if item_name.lower() == query.lower():
-                # or currency_name.lower() == query.lower()
+            if currency_name.lower() == query.lower():
                 orders.append(
                     Order(
+                        name=rust_order.name,
                         item=item_name,
                         quantity=rust_order.quantity,
                         amount_in_stock=rust_order.amount_in_stock,

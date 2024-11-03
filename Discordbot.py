@@ -13,19 +13,19 @@ class MyBot(commands.Bot):
         super().__init__(
             command_prefix=f"{config['additional']['prefix']}",
             intents=discord.Intents.all(),
-            application_id=config['additional']['application_id']
+            application_id=config["additional"]["application_id"],
         )
 
     async def setup_hook(self):
 
-        for filename in os.listdir("./cogs"):
+        for filename in os.listdir("./rustshopbot/cogs"):
             if filename.endswith(".py"):
-                await self.load_extension(f"cogs.{filename[:-3]}")
+                await self.load_extension(f"rustshopbot.cogs.{filename[:-3]}")
         await bot.tree.sync()
 
     async def on_ready(self):
-        print('Logged in!')
+        print("Logged in!")
 
 
 bot = MyBot()
-bot.run(config['tokens']['discord_token'])
+bot.run(config["tokens"]["discord_token"])

@@ -1,6 +1,6 @@
 from abc import ABCMeta
 import json
-from gateway.rust import ServerConfig
+from rustshopbot.gateway.rust import ServerConfig
 
 
 class ServerRepository(metaclass=ABCMeta):

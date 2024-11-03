@@ -6,11 +6,11 @@ from hamcrest import (
 )
 import pytest
 
-from command.item import Order, RustOrder
-from command.search_buyers import SearchBuyers
-from gateway.rust import ServerConfig
-from repository.item_repository import JsonItemRepository
-from repository.server_repository import JsonServerRepository
+from rustshopbot.command.search_buyers import SearchBuyers
+from rustshopbot.entity.order import Order
+from rustshopbot.gateway.rust import RustOrder, ServerConfig
+from rustshopbot.repository.item_repository import JsonItemRepository
+from rustshopbot.repository.server_repository import JsonServerRepository
 from tests.fakes import FakeRustGateway, FakeRustGatewayFactory
 
 
@@ -21,6 +21,7 @@ class TestSearchBuyers:
         # sell: 1 sar, buy: 20 hqm
         socket.add_order(
             RustOrder(
+                name="Shop 1",
                 item_id=-904863145,
                 quantity=1,
                 amount_in_stock=1,
@@ -34,6 +35,7 @@ class TestSearchBuyers:
         # sell: 1 diesel, buy: 1 sar
         socket.add_order(
             RustOrder(
+                name="Shop 1",
                 item_id=1568388703,
                 quantity=1,
                 amount_in_stock=1,
@@ -46,6 +48,7 @@ class TestSearchBuyers:
         # sell: 1000 cloth, buy: 50 scrap
         socket.add_order(
             RustOrder(
+                name="Shop 2",
                 item_id=-858312878,
                 quantity=1000,
                 amount_in_stock=5,
@@ -75,6 +78,7 @@ class TestSearchBuyers:
             result,
             contains_inanyorder(
                 Order(
+                    name="Shop 1",
                     item="Diesel Fuel",
                     quantity=1,
                     amount_in_stock=1,

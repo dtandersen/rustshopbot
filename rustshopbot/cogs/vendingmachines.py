@@ -1,16 +1,15 @@
-from collections import defaultdict
-import time
+import asyncio
 from discord import app_commands
 from discord.ext import commands
 import discord
 import json
 from typing import Dict, List
-from command.item import Order
-from command.search_buyers import SearchBuyers
-from command.search_sellers import SearchSellers
-from gateway.rust import RustPlusRustGatewayFactory, ServerConfig
-from repository.item_repository import JsonItemRepository
-from repository.server_repository import JsonServerRepository
+from rustshopbot.command.search_buyers import SearchBuyers
+from rustshopbot.command.search_sellers import SearchSellers
+from rustshopbot.entity.order import Order
+from rustshopbot.gateway.rust import RustPlusPyRustGatewayFactory
+from rustshopbot.repository.item_repository import JsonItemRepository
+from rustshopbot.repository.server_repository import JsonServerRepository
 
 
 def get_server_names():
@@ -29,7 +28,7 @@ def get_server_names():
 class vending(commands.Cog):
     def __init__(self, client):
         print("[Cog] Vending Machines has been initiated")
-        self.socket_factory = RustPlusRustGatewayFactory()
+        self.socket_factory = RustPlusPyRustGatewayFactory()
         self.item_repository = JsonItemRepository()
         self.server_repository = JsonServerRepository()
         self.cogs_color = "0x9b59b6"
@@ -107,6 +106,20 @@ class vending(commands.Cog):
     async def present_orders(self, orders, item, servername, interaction):
         thumbnail = None
         orders_by_grid = group_by_key(orders)
+        if len(orders_by_grid) == 0:
+            await interaction.followup.send(
+                f"No orders found for {item} on {servername}",
+            )
+            return
+        embed = await self.start_embed(
+            item_list="",
+            thumbnail=thumbnail,
+            item=item,
+            servername=servername,
+            grid="",
+            count=len(orders),
+        )
+        count = 0
         for orders in orders_by_grid.values():
             messages = []
             for order in orders:
@@ -114,46 +127,72 @@ class vending(commands.Cog):
                 currency_name = order.currency
                 grid = order.grid
 
-                message = f"Selling: {sell_order_item} x{order.quantity}\nBuying: {currency_name} x{order.cost_per_item}\nStock: {order.amount_in_stock}"
+                message = f"Sells: {sell_order_item} x{order.quantity}\nBuys: {currency_name} x{order.cost_per_item}\nStock: {order.amount_in_stock}"
                 if len(self.format_messages(messages + [message])) > 1024:
-                    embed = await self.setup_embed(
-                        item_list=self.format_messages(messages),
-                        thumbnail=thumbnail,
-                        item=item,
-                        servername=servername,
-                        grid=grid,
+                    # embed = await self.setup_embed(
+                    #     item_list=self.format_messages(messages),
+                    #     thumbnail=thumbnail,
+                    #     item=item,
+                    #     servername=servername,
+                    #     grid=grid,
+                    # )
+                    embed.add_field(
+                        # name=f"{servername} vending machine data!",
+                        name=f"{grid}.",
+                        value=f"```{self.format_messages(messages)}```",
+                        inline=True,
                     )
                     messages = [message]
-                    time.sleep(2)
+                    await asyncio.sleep(0.1)
                 else:
                     messages.append(message)
 
             if len(messages) > 0:
-                embed = await self.setup_embed(
-                    item_list=self.format_messages(messages),
-                    thumbnail=thumbnail,
-                    item=item,
-                    servername=servername,
-                    grid=grid,
+                # embed = await self.setup_embed(
+                #     item_list=self.format_messages(messages),
+                #     thumbnail=thumbnail,
+                #     item=item,
+                #     servername=servername,
+                #     grid=grid,
+                # )
+                # if count % 3 == 2:
+                #     embed.add_field(
+                #         # name=f"{servername} vending machine data!",
+                #         name=f"\t",
+                #         value=f"\t",
+                #         inline=True,
+                #     )
+                inline = count <= 1 or count % 2 == 1
+                # print(f"count: {count} Inline: {inline}")
+                embed.add_field(
+                    # name=f"{servername} vending machine data!",
+                    name=f"{order.name} [{grid}]",
+                    value=f"```{self.format_messages(messages)}```",
+                    inline=True,
                 )
-                time.sleep(2)
-            await interaction.followup.send(embed=embed)
+                if count % 2 == 1:
+                    # print(f"break")
+                    embed.add_field(
+                        # name=f"{servername} vending machine data!",
+                        name=f"\t",
+                        value=f"\t",
+                        inline=False,
+                    )
+                count = count + 1
 
-    async def setup_embed(self, item_list, thumbnail, item, servername, grid):
+                await asyncio.sleep(0.1)
+
+        await interaction.followup.send(embed=embed)
+
+    async def start_embed(self, item_list, thumbnail, item, servername, grid, count):
         embed = discord.Embed(
-            title=f"{item} on {servername}",
+            title=f"Found {count} results for {item} on {servername}",
             color=int(self.cogs_color, base=16),
         )
         # embed.set_footer(
         #     text="Discord bot created by Gnomeslayer, using Rust+ wrapper created by Ollie."
         # )
         embed.set_thumbnail(url=thumbnail)
-        embed.add_field(
-            # name=f"{servername} vending machine data!",
-            name=f"Found in {grid}",
-            value=f"```{item_list}```",
-            inline=True,
-        )
         return embed
 
     def format_messages(self, messages):
@@ -170,10 +209,14 @@ def key_func(k: Order):
 
 def group_by_key(orders: List[Order]) -> Dict[str, List[Order]]:
     v = {}
-
-    for order in orders:
-        if order.grid not in v:
-            v[order.grid] = []
-        v[order.grid].append(order)
+    sorted_orders = sorted(
+        orders, key=lambda order: f"{9999999-order.amount_in_stock:07d}-{order.grid}"
+    )
+    # sorted_orders = sorted(sorted_orders, key=lambda x: x.name)
+    for order in sorted_orders:
+        key = f"{order.name}-{order.grid}"
+        if key not in v:
+            v[key] = []
+        v[key].append(order)
 
     return v
