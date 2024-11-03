@@ -28,3 +28,7 @@ python Discordbot.py
     '_amount_in_stock': 1
 }
  ```
+
+ # Credits
+
+ * Forked from https://github.com/Gnomeslayer/vending
