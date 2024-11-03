@@ -3623,5 +3623,115 @@
         "link": "https://rustlabs.com/img/items180/ammo.rocket.mlrs.png",
         "name": "MLRS Rocket",
         "shortname": "mlrs-rocket"
+    },
+    "-1989600732": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Hot Air Balloon Armor",
+        "shortname": "hab.armor"
+    },
+    "1914691295": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Prototype 17",
+        "shortname": "pistol.prototype17"
+    },
+    "935606207": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Minigun",
+        "shortname": "minigun"
+    },
+    "861513346": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Lumberjack Suit",
+        "shortname": "hazmatsuit.lumberjack"
+    },
+    "-1196547867": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Electric Furnace",
+        "shortname": "electric.furnace"
+    },
+    "-1334569149": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Hockey Mask",
+        "shortname": "metal.facemask.hockey"
+    },
+    "-1767794021": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Gas Compression Overdrive",
+        "shortname": "weapon.mod.gascompressionovedrive"
+    },
+    "1132603396": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Weapon Rack Stand",
+        "shortname": "gunrack_stand"
+    },
+    "2005491391": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Extended Magazine",
+        "shortname": "weapon.mod.extendedmags"
+    },
+    "-470439097": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Arctic Suit",
+        "shortname": "hazmatsuit.arcticsuit"
+    },
+    "240752557": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Tall Weapon Rack",
+        "shortname": "gunrack_tall.horizontal"
+    },
+    "-96256997": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Wide Weapon Rack",
+        "shortname": "gunrack_wide.horizontal"
+    },
+    "-246672609": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Horizontal Weapon Rack",
+        "shortname": "gunrack.horizontal"
+    },
+    "-105415879": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Frontier Suit",
+        "shortname": "hazmatsuit.frontier"
+    },
+    "1524980732": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Carvable Pumpkin",
+        "shortname": "carvable.pumpkin"
+    },
+    "809689733": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Mummy Mask",
+        "shortname": "mummymask"
+    },
+    "-1647389398": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Frankenstein Mask",
+        "shortname": "frankensteinmask"
+    },
+    "1865253052": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Dracula Mask",
+        "shortname": "draculamask"
+    },
+    "838308300": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Burst Module",
+        "shortname": "weapon.mod.burstmodule"
+    },
+    "-1214542497": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "HMLMG",
+        "shortname": "hmlmg"
+    },
+    "1107575710": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Arctic Scientist Suit",
+        "shortname": "hazmatsuit_scientist_arctic"
+    },
+    "-797592358": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Abyss Divers Suit",
+        "shortname": "hazmatsuit.diver"
     }
 }
