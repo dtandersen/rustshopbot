@@ -6,7 +6,9 @@ WORKDIR /app
 
 COPY requirements.txt /app
 RUN pip install -r requirements.txt
-COPY cogs /app/cogs
-COPY json/items.json /app/json
 COPY Discordbot.py /app
+COPY cogs /app/cogs
+COPY gateway /app/gateway
+COPY command /app/command
+COPY json/items.json /app/json
 
