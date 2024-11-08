@@ -3743,5 +3743,10 @@
         "link": "https://rustlabs.com/img/items180/clone.corn.png",
         "name": "Handmade SMG",
         "shortname": "t1_smg"
+    },
+    "-348232115": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "SKS",
+        "shortname": "rifle.sks"
     }
 }
