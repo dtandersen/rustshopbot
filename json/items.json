@@ -3748,5 +3748,20 @@
         "link": "https://rustlabs.com/img/items180/clone.corn.png",
         "name": "SKS",
         "shortname": "rifle.sks"
+    },
+    "-892718768": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Prisoner Hood",
+        "shortname": "prisonerhood"
+    },
+    "960673498": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Large Hunting Trophy",
+        "shortname": "huntingtrophylarge"
+    },
+    "-2073432256": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Skinning Knife",
+        "shortname": "knife.skinning"
     }
 }
