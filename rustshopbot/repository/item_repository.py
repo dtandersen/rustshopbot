@@ -1,6 +1,7 @@
 from abc import ABCMeta
 from dataclasses import dataclass
 import json
+from typing import List
 
 
 @dataclass
@@ -14,6 +15,9 @@ class ItemRepository(metaclass=ABCMeta):
         pass
 
     def get_item(self, id: int) -> Item:
+        pass
+
+    def find_by_name(self, query: str) -> List[Item]:
         pass
 
 
@@ -35,3 +39,9 @@ class JsonItemRepository(ItemRepository):
             Item(name=item["name"], thumbnail_url=item["link"])
             for item in self.items.values()
         ]
+
+    def find_by_name(self, query: str, limit: int) -> List[Item]:
+        all_items = self.all()
+        items = [item for item in all_items if query.lower() in item.name.lower()]
+        sort_by_length = sorted(items, key=lambda x: len(x.name))
+        return sort_by_length[:limit]

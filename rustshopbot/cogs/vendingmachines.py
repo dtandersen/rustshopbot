@@ -46,13 +46,12 @@ class vending(commands.Cog):
         for item in self.item_repository.all():
             choices.append(item.name)
         if current:
-            choicelist = []
-            for choice in choices:
-                if current.lower() in choice.lower():
-                    choicelist.append(choice)
-                if len(choicelist) > 10:
-                    break
-            return [app_commands.Choice(name=c, value=c) for c in choicelist]
+            items = self.item_repository.find_by_name(current, 7)
+            found = [item.name for item in items]
+            sorted_by_name_property = sorted(found, key=lambda x: x.lower())
+            return [
+                app_commands.Choice(name=c, value=c) for c in sorted_by_name_property
+            ]
         else:
             default = ["Start typing an item name!"]
             return [app_commands.Choice(name=d, value=d) for d in default]
