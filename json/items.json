@@ -3763,5 +3763,20 @@
         "link": "https://rustlabs.com/img/items180/clone.corn.png",
         "name": "Skinning Knife",
         "shortname": "knife.skinning"
+    },
+    "1538126328": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Industrial Combiner",
+        "shortname": "industrial.combiner"
+    },
+    "610102428": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Industrial Conveyor",
+        "shortname": "industrial.conveyor"
+    },
+    "1430085198": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Industrial Crafter",
+        "shortname": "industrial.crafter"
     }
 }
