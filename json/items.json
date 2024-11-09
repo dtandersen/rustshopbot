@@ -3778,5 +3778,10 @@
         "link": "https://rustlabs.com/img/items180/clone.corn.png",
         "name": "Industrial Crafter",
         "shortname": "industrial.crafter"
+    },
+    "-1049172752": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Storage Adaptor",
+        "shortname": "storageadaptor"
     }
 }
