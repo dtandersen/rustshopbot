@@ -1,5 +1,6 @@
 from abc import ABCMeta
 from dataclasses import dataclass
+import logging
 from typing import List
 from rustplus import RustMarker, RustSocket, ServerDetails
 from rustplus.structs import RustInfo
@@ -44,9 +45,10 @@ class RustGatewayFactory(metaclass=ABCMeta):
 class RustPlusPyRustGateway(RustGateway):
     def __init__(self, socket: RustSocket) -> None:
         self.socket: RustSocket = socket
+        self.logger = logging.getLogger(__name__)
 
     async def list_orders(self) -> List[RustOrder]:
-        print("Listing orders")
+        self.logger.info("Listing orders")
         markers = await self.socket.get_markers()
 
         # dump markers to file for debugging
@@ -85,18 +87,21 @@ class RustPlusPyRustGateway(RustGateway):
         return orders
 
     async def get_map_size(self) -> int:
-        print("Getting map size")
+        self.logger.info("Getting map size")
         info: RustInfo = await self.socket.get_info()
         return info.size
 
     async def close(self) -> None:
-        print("Closing RustPlusRustGateway")
+        self.logger.info("Closing RustPlusRustGateway")
         await self.socket.disconnect()
 
 
 class RustPlusPyRustGatewayFactory(RustGatewayFactory):
+    def __init__(self) -> None:
+        self.logger = logging.getLogger(__name__)
+
     async def connect(self, config: ServerConfig) -> RustGateway:
-        print(f"Connecting to {config.host}:{config.port}...")
+        self.logger.info(f"Connecting to {config.host}:{config.port}...")
         server_details = ServerDetails(
             config.host, config.port, config.playerId, config.playerToken
         )

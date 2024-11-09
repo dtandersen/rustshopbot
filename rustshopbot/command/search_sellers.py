@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 from rustshopbot.entity.order import Order
@@ -17,6 +18,7 @@ class SearchSellers:
         self.socket_factory = socket_factory
         self.servers = servers
         self.items = items
+        self.logger = logging.getLogger(__name__)
 
     async def execute(self, server_name: str, query: str) -> List[Order]:
         server = self.servers.get_server(server_name)
@@ -53,5 +55,5 @@ class SearchSellers:
             item = self.items.get_item(item_id)
             return item.name
         except ValueError:
-            print(f"Item with id {item_id} not found")
+            self.logger.warn(f"Item with id {item_id} not found")
             return f"{item_id}"

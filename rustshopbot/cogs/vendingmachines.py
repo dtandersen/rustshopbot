@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from discord import app_commands
 from discord.ext import commands
 import discord
@@ -27,34 +28,33 @@ def get_server_names():
 
 class vending(commands.Cog):
     def __init__(self, client):
-        print("[Cog] Vending Machines has been initiated")
         self.socket_factory = RustPlusPyRustGatewayFactory()
         self.item_repository = JsonItemRepository()
         self.server_repository = JsonServerRepository()
         self.cogs_color = "0x9b59b6"
+        self.logger = logging.getLogger(__name__)
+        self.logger.info("[Cog] Vending Machines has been initiated")
 
     server_names = get_server_names()
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("[Cog] Vending Machines is ready")
+        self.logger.info("[Cog] Vending Machines is ready")
 
     async def autocomplete(
         self, interaction: discord.Interaction, current: str
     ) -> List[app_commands.Choice[str]]:
-        choices = []
-        for item in self.item_repository.all():
-            choices.append(item.name)
         if current:
             items = self.item_repository.find_by_name(current, 7)
-            found = [item.name for item in items]
-            sorted_by_name_property = sorted(found, key=lambda x: x.lower())
+            names = [item.name for item in items]
+            items_sorted_by_name = sorted(names, key=lambda name: name.lower())
             return [
-                app_commands.Choice(name=c, value=c) for c in sorted_by_name_property
+                app_commands.Choice(name=name, value=name)
+                for name in items_sorted_by_name
             ]
         else:
-            default = ["Start typing an item name!"]
-            return [app_commands.Choice(name=d, value=d) for d in default]
+            default = "Start typing an item name!"
+            return [app_commands.Choice(name=default, value=default)]
 
     @app_commands.command(
         name="buy", description="Searches The Rust Server's Vending Machine"
@@ -70,7 +70,7 @@ class vending(commands.Cog):
         server: app_commands.Choice[int],
         item: str,
     ):
-        print(f"Searching for sellers of {item} on {server.name}")
+        self.logger.info(f"Searching for sellers of {item} on {server.name}")
 
         await interaction.response.defer()
         command = SearchSellers(
@@ -93,7 +93,7 @@ class vending(commands.Cog):
         server: app_commands.Choice[int],
         item: str,
     ):
-        print(f"Searching for buyers of {item} on {server.name}")
+        self.logger.info(f"Searching for buyers of {item} on {server.name}")
 
         await interaction.response.defer()
         command = SearchBuyers(
