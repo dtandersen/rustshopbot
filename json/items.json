@@ -3783,5 +3783,10 @@
         "link": "https://rustlabs.com/img/items180/clone.corn.png",
         "name": "Storage Adaptor",
         "shortname": "storageadaptor"
+    },
+    "-2026042603": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Baseball Bat",
+        "shortname": "mace.baseballbat"
     }
 }
