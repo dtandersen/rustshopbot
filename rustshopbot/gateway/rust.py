@@ -1,6 +1,7 @@
 from abc import ABCMeta
 from dataclasses import dataclass
 import logging
+import pprint
 from typing import List
 from rustplus import RustMarker, RustSocket, ServerDetails
 from rustplus.structs import RustInfo
@@ -63,14 +64,17 @@ class RustPlusPyRustGateway(RustGateway):
         #         f.write(objstr(so))
 
         orders = []
+        pp = pprint.PrettyPrinter(indent=4)
         for marker in markers:
             if marker.type != RustMarker.VendingMachineMarker:
                 continue
             # obj_vars = vars(marker)
             # pprint.pp(obj_vars)
+            # self.logger.debug(f"Marker: {obj_vars}")
             for marker_sell_order in marker.sell_orders:
-                # obj_vars = vars(marker_sell_order)
+                obj_vars = vars(marker_sell_order)
                 # pprint.pp(obj_vars)
+                self.logger.debug(f"Sell Order: {obj_vars}")
 
                 order = RustOrder(
                     name=marker.name,
