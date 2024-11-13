@@ -3808,5 +3808,10 @@
         "link": "https://rustlabs.com/img/items180/clone.corn.png",
         "name": "Seismic Sensor",
         "shortname": "electric.seismicsensor"
+    },
+    "140006625": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "PTZ CCTV Camera",
+        "shortname": "ptz.cctv.camera"
     }
 }
