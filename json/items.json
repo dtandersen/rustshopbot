@@ -3793,5 +3793,20 @@
         "link": "https://rustlabs.com/img/items180/clone.corn.png",
         "name": "Parachute",
         "shortname": "parachute"
+    },
+    "1296788329": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Homing Missile",
+        "shortname": "ammo.rocket.seeker"
+    },
+    "-218009552": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Homing Missile Launcher",
+        "shortname": "homingmissile.launcher"
+    },
+    "-948291630": {
+        "link": "https://rustlabs.com/img/items180/clone.corn.png",
+        "name": "Seismic Sensor",
+        "shortname": "electric.seismicsensor"
     }
 }
