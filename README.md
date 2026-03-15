@@ -30,6 +30,12 @@ Add `playerToken` to `json/config.json`. The `playerId` is the Steam ID 64.
 
 ```
 
+install node.js
+https://nodejs.org/en/download
+npx @liamcottle/rustplus.js fcm-register
+npx @liamcottle/rustplus.js fcm-listen
+
+
 ## Running the bot
 
 **With Python**
