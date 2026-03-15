@@ -3813,5 +3813,15 @@
         "link": "https://rustlabs.com/img/items180/clone.corn.png",
         "name": "PTZ CCTV Camera",
         "shortname": "ptz.cctv.camera"
+    },
+    "-143481979": {
+        "link": "https://wiki.rustclash.com/img/items180/basicblueprintfragment.png",
+        "name": "Basic Blueprint Fragment",
+        "shortname": "basicblueprintfragment"
+    },
+    "-1896395719": {
+        "link": "https://wiki.rustclash.com/img/items180/advancedblueprintfragment.png",
+        "name": "Advanced Blueprint Fragment",
+        "shortname": "advancedblueprintfragment"
     }
 }
