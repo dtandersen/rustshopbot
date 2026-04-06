@@ -244,10 +244,20 @@
     "name": "Armored Double Door",
     "shortname": "door.double.hinged.toptier"
   },
+  "607785075": {
+    "link": "",
+    "name": "Armored Ladder Hatch",
+    "shortname": "floor.ladder.hatch.toptier"
+  },
   "-1615281216": {
     "link": "",
     "name": "Armored Passenger Vehicle Module",
     "shortname": "vehicle.1mod.passengers.armored"
+  },
+  "-478923685": {
+    "link": "",
+    "name": "Armored Triangle Ladder Hatch",
+    "shortname": "floor.triangle.ladder.hatch.toptier"
   },
   "1254295946": {
     "link": "",
@@ -635,6 +645,11 @@
     "link": "",
     "name": "Bulb String Lights",
     "shortname": "electric.bulbstringlights"
+  },
+  "1285226495": {
+    "link": "",
+    "name": "Bunny Costume",
+    "shortname": "bunny.suit"
   },
   "-1004426654": {
     "link": "",
@@ -3542,6 +3557,11 @@
     "shortname": "rocket.launcher.rpg7"
   },
   "-1985799200": { "link": "", "name": "Rug", "shortname": "rug" },
+  "-173268138": {
+    "link": "",
+    "name": "Rustigé Egg - Amethyst",
+    "shortname": "rustige_egg_h"
+  },
   "-173268132": {
     "link": "",
     "name": "Rustigé Egg - Blue",
@@ -4768,6 +4788,11 @@
     "link": "",
     "name": "Waterwell NPC Jumpsuit",
     "shortname": "jumpsuit.waterwellnpc"
+  },
+  "-379403794": {
+    "link": "",
+    "name": "Water Wheel",
+    "shortname": "generator.water"
   },
   "952603248": {
     "link": "",
