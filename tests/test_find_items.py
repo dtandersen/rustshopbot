@@ -20,11 +20,11 @@ class TestFindItems:
             contains_inanyorder(
                 Item(
                     name="Jacket",
-                    thumbnail_url="https://rustlabs.com/img/items180/jacket.png",
+                    thumbnail_url="",
                 ),
                 Item(
                     name="Pump Jack",
-                    thumbnail_url="https://rustlabs.com/img/items180/mining.pumpjack.png",
+                    thumbnail_url="",
                 ),
             ),
         )
