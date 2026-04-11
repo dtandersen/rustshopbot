@@ -25,6 +25,7 @@ class JsonItemRepository(ItemRepository):
     def __init__(self):
         with open("./json/items.json", "r") as f:
             self.items = json.load(f)
+            self.all_items = self.all()
 
     def get_item(self, id: int) -> Item:
         item = self.items.get(str(id))
@@ -41,7 +42,7 @@ class JsonItemRepository(ItemRepository):
         ]
 
     def find_by_name(self, query: str, limit: int) -> List[Item]:
-        all_items = self.all()
+        all_items = self.all_items
         items = [item for item in all_items if query.lower() in item.name.lower()]
         sort_by_length = sorted(items, key=lambda x: len(x.name))
         return sort_by_length[:limit]
